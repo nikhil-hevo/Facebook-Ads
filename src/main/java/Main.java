@@ -109,7 +109,7 @@ public class Main {
                     .setActionAttributionWindows(Arrays.asList(AdsInsights.EnumActionAttributionWindows.VALUE_7D_CLICK, AdsInsights.EnumActionAttributionWindows.VALUE_1D_VIEW)) // set attribution window
                     .setTimeIncrement("1") // to fetch the records on a granular level of per-day
                     .setTimeRange(getTimeRange(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))))
-                    .setFiltering(getFiltering());
+                    .setFiltering(getFiltering(args[2]));
 
             AdReportRun adReportRun = getInsightsAsync.execute();
             if (Objects.isNull(adReportRun)) {
@@ -166,7 +166,7 @@ public class Main {
         return String.format("{\"since\":\"%s\",\"until\":\"%s\"}", startDate, endDate);
     }
 
-    public static String getFiltering() {
-        return "[{\"field\":\"campaign.id\",\"operator\":\"EQUAL\", \"value\": \"6223157031644\"}]";
+    public static String getFiltering(String campaignId) {
+        return String.format("[{\"field\":\"campaign.id\",\"operator\":\"EQUAL\", \"value\": \"%s\"}]", campaignId);
     }
 }
